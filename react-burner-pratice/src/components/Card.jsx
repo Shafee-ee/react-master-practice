@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import CardList from './CardList';
 
-const Card = () => {
+const Card = ({ setUsers }) => {
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
     const [role, setRole] = useState('');
+    const [users, setUsers] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,9 +14,8 @@ const Card = () => {
             console.log("Validation failed");
             return;
         }
-        const user = { name, age, role };
-        console.log('User:', user);
-
+        const newUser = { name, age, role };
+        setUsers(prev => [...prev, newUser])
         setName('');
         setAge('');
         setRole('');
@@ -40,6 +41,7 @@ const Card = () => {
                 />
                 <button onClick={handleSubmit}>Add user</button>
             </form>
+            <CardList users={users} />
         </div>
     )
 }

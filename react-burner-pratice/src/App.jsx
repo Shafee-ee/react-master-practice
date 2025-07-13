@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import React from 'react'
 import './App.css'
+import CardList from './components/CardList';
+import Card from './components/Card';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [users, setUsers] = useState([])
 
   return (
-    <div className='bg-gray-700 text-white'>
-      hello
+    <div >
+      <Card setUsers={setUsers} />
+      <CardList users={users} />
     </div>
   )
 }
