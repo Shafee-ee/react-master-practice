@@ -8,7 +8,7 @@ function App() {
   const [users, setUsers] = useState([])
 
   return (
-    <div >
+    <div className='bg-gray-100 min-h-vh p-6'>
       <Card setUsers={setUsers} />
       <CardList users={users} />
     </div>
