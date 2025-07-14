@@ -20,7 +20,7 @@ const Form = ({ name, setName, age, setAge, role, setRole, handleSubmit, errors 
                 placeholder='Enter Role....'
                 value={role}
                 onChange={e => setRole(e.target.value)} />
-            {errors?.roles && <p className='text-sm text-red-500'>{errors.role}</p>}
+            {errors?.role && <p className='text-sm text-red-500'>{errors.role}</p>}
 
             <button onClick={handleSubmit} className='bg-gray-100 px-3 py-2 hover:bg-gray-200'>Add user</button>
         </form>
