@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import CardList from './CardList';
+import Form from './Form';
 
-const Card = ({ setUsers }) => {
+const Card = () => {
+    const [errors, setErrors] = useState({});
+
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
     const [role, setRole] = useState('');
@@ -9,38 +12,39 @@ const Card = ({ setUsers }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const newErrors = {};
 
-        if (!name.trim() || !age.trim() || !role.trim()) {
-            console.log("Validation failed");
-            return;
+        if (!name.trim()) newErrors.name = "Name is  Required";
+        if (!age.trim() || Number(age) <= 0) newErrors.age = "Age is required";
+        if (!role.trim()) newErrors.role = "Role is required";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return
         }
-        const newUser = { name, age, role };
-        setUsers(prev => [...prev, newUser])
+
+        const newUser = { age, name, role };
+        setUsers(prev => [...prev, newUser]);
+
         setName('');
         setAge('');
         setRole('');
+        setErrors({});
+
     }
 
     return (
         <div>
-            <form action="submit">
-                <input type="text"
-                    placeholder='Enter Name...'
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                />
-                <input type="number"
-                    placeholder='Enter Age...'
-                    onChange={(e) => setAge(e.target.value)}
-                    value={age}
-                />
-                <input type="text"
-                    placeholder='Enter Role...'
-                    onChange={(e) => setRole(e.target.value)}
-                    value={role}
-                />
-                <button onClick={handleSubmit}>Add user</button>
-            </form>
+            <Form
+                name={name}
+                setName={setName}
+                age={age}
+                setAge={setAge}
+                role={role}
+                setRole={setRole}
+                handleSubmit={handleSubmit}
+                errors={errors}
+            />
             <CardList users={users} />
         </div>
     )
