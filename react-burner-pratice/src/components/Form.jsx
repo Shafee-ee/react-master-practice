@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react'
+import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react'
 
 const Form = forwardRef((props, ref) => {
     const { users, setUsers } = props;
@@ -8,6 +8,7 @@ const Form = forwardRef((props, ref) => {
     const [age, setAge] = useState('');
     const [role, setRole] = useState('');
     // const [users, setUsers] = useState([]);
+    const nameInputRef = useRef(null);
     const [editIndex, setEditIndex] = useState(null);
     const isEditing = editIndex !== null;
 
@@ -20,6 +21,13 @@ const Form = forwardRef((props, ref) => {
             setAge(user.age);
             setRole(user.role);
             setEditIndex(index);
+
+
+            setTimeout(() => {
+                const top = nameInputRef.current?.getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({ top, behavior: 'smooth' })
+                nameInputRef.current?.focus();
+            }, 200)
         }
     }))
 
@@ -81,6 +89,7 @@ const Form = forwardRef((props, ref) => {
     return (
         <form className='mt-20 bg-white border border-gray-800 flex w-full max-w-md mx-auto flex-col  p-6 shadow-lg'>
             <input type="text"
+                ref={nameInputRef}
                 placeholder='Enter Name....'
                 value={name}
                 onChange={e => setName(e.target.value)}
